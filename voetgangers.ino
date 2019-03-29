@@ -15,7 +15,7 @@ void voetgangersStateMachine() {
     case SLAGBOOM_LANGZAAM_OMHOOG:
       slagboom_langzaam_omhoog_do();
       
-      if (slagboomVolledigGeopend()) {
+      if (helemaalGeopend()) {
         slagboom_langzaam_omhoog_exit();
         voetgangers_oversteken_entry();
         voetgangersState = VOETGANGERS_OVERSTEKEN;
@@ -23,20 +23,28 @@ void voetgangersStateMachine() {
       break;
     case VOETGANGERS_OVERSTEKEN:
       voetgangers_oversteken_do();
-        if (timer(VOETGANGERS_OVERSTEKEN_INTERVAL)) {
+        if (stopwatch(VOETGANGERS_OVERSTEKEN_INTERVAL)) {
           voetgangers_oversteken_exit();
-          oversteken_entry();
+          aftellen_entry();
           voetgangersState = AFTELLEN;
         }
       break;
-      
     case AFTELLEN:
-      oversteken_do();
-
+      aftellen_do();
+      
       if(nr == 0){
         aftellen_exit(); 
         slagboom_langzaam_omlaag_entry();
-        huidigeState = DAG; 
+        voetgangersState = SLAGBOOM_LANGZAAM_OMLAAG;
+      }
+    break;
+    case SLAGBOOM_LANGZAAM_OMLAAG: 
+      slagboom_langzaam_omlaag_do();
+      
+      if(helemaalGesloten()){
+        slagboom_langzaam_omlaag_exit();
+        dagstand_aan_entry(); 
+        mainSituatie = DAG; 
       }
     break;
     default:
@@ -48,8 +56,8 @@ void slagboom_langzaam_omhoog_entry(){
   // <nothing>
 }
 
-void slagboom_langzaam_omhoog(){
-  slagboom("langzaam openen");  
+void slagboom_langzaam_omhoog_do(){
+  slagboom("Langzaam openen");  
 }
 
 void slagboom_langzaam_omhoog_exit(){
@@ -57,8 +65,7 @@ void slagboom_langzaam_omhoog_exit(){
 }
 
 void voetgangers_oversteken_entry() {
-  ledAan(0, 0);
-  ledAan(1, 0);
+  //<nothing>
 }
 
 void voetgangers_oversteken_do() {
@@ -66,13 +73,18 @@ void voetgangers_oversteken_do() {
   setBuzzer("Snel tikken");
 } 
 
+void voetgangers_oversteken_exit(){
+  //<nothing>
+}
+
 void aftellen_entry(){
   matrixBord(nr);
 }
 
 void aftellen_do() {
-  setBuzzer("3 snelle tikken");
-  if(timer(DISPLAY_AFTELLEN)){
+  Serial.println("hij gaat aftellen");
+  setBuzzer("3 keer snel tikken");
+  if(stopwatch(DISPLAY_AFTELLEN)){
     nr--;
     matrixBord(nr);   
   }
@@ -88,7 +100,7 @@ void slagboom_langzaam_omlaag_entry() {
 
 void slagboom_langzaam_omlaag_do() {
   setBuzzer("Langzaam tikken");
-  slagboom("langzaam dicht");
+  slagboom("Langzaam sluiten");
 }
 
 void slagboom_langzaam_omlaag_exit() { 

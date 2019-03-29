@@ -1,9 +1,9 @@
 const int TOTAAL_AANTAL_STOPLICHTEN = 2; 
 const int LEDS_PER_STOPLICHT = 3; 
 const int LINKS = 0; 
-const int RECHT = 1; 
+const int RECHTS = 1; 
     
-const int stoplicht[TOTAAL_AANTAL_STOPLICHTEN][LEDS_PER_STOPLICHT] = {
+const int STOPLICHT[TOTAAL_AANTAL_STOPLICHTEN][LEDS_PER_STOPLICHT] = {
   {10, 9, 8},
   {7, 6, 5}
 };
@@ -11,7 +11,7 @@ const int stoplicht[TOTAAL_AANTAL_STOPLICHTEN][LEDS_PER_STOPLICHT] = {
 void stoplichtSetup() {
   for (int stoplicht = 0; stoplicht < TOTAAL_AANTAL_STOPLICHTEN; stoplicht++) {
     for (int nr = 0; nr < LEDS_PER_STOPLICHT; nr++) {
-      controlSetup(stoplicht[stoplicht][nr], OUTPUT);
+      controlSetup(STOPLICHT[stoplicht][nr]);
     }
   }
 }
@@ -19,20 +19,30 @@ void stoplichtSetup() {
 void stoplichtUit() {
   for (int stoplicht = 0; stoplicht < TOTAAL_AANTAL_STOPLICHTEN; stoplicht++) {
     for (int nr = 0; nr < LEDS_PER_STOPLICHT; nr++) {
-      lampjeUit(stoplicht[stoplicht][nr]);
+      lampjeUit(STOPLICHT[stoplicht][nr]);
     }
   }
 }
 
-void zetStoplichtenAan(int _Links, int _Rechts){
+void zetStoplichtAan(int welkStoplicht, int _Rechts){
   stoplichtUit();
-  lampjeAan(stoplicht(LINKS, _Links));
-  lampjeAan(stoplicht(RECHTS, _Rechts));
+  lampjeAan(STOPLICHT[welkStoplicht][_Rechts]);
 }
 
-void laatLampjeKnipperen(){
-  if(stopwatchBuzzer(buzzer_tijd_snel_tikken)){
-    lampjeKnipperen(stoplicht(LINKS, ORANJE));
-    lampjeKnipperen(stoplicht(RECHTS, ORANJE));
+void zetStoplichtenAan(int _Links, int _Rechts){
+  stoplichtUit();
+  lampjeAan(STOPLICHT[LINKS][_Links]);
+  lampjeAan(STOPLICHT[RECHTS][_Rechts]);
+}
+
+void laatLampjeKnipperen(String kant){
+  if(kant == "Links"){
+    if(stopwatchBuzzer(BUZZER_TIJD_SNEL_TIKKEN)){
+      lampjeKnipperen(STOPLICHT[LINKS][GROEN]);
+    }
+  } else {
+    if(stopwatchBuzzer(BUZZER_TIJD_SNEL_TIKKEN)){
+      lampjeKnipperen(STOPLICHT[RECHTS][GROEN]);
+    }
   }
 }

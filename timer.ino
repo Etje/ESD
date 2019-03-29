@@ -4,9 +4,9 @@ unsigned long vorigeMillisBuzzer;
 unsigned long vorigeMillisRequest; 
 
 void setupTimers(){
-  previousMillis = millis(); 
-  previousMillisBuzzer = millis(); 
-  previousMillisRequest = millis(); 
+  vorigeMillis = millis(); 
+  vorigeMillisBuzzer = millis(); 
+  vorigeMillisRequest = millis(); 
 }
 
 boolean stopwatch(int interval){
@@ -24,7 +24,7 @@ boolean stopwatchBuzzer(int interval){
   unsigned long huidigeMillis = millis();
 
   if(huidigeMillis - vorigeMillisBuzzer >= interval){
-    vorigeMillis = huidigeMillis;
+    vorigeMillisBuzzer = huidigeMillis;
     return true;
   }
 
@@ -35,7 +35,7 @@ boolean stopwatchRequest(int interval){
   unsigned long huidigeMillis = millis();
 
   if(huidigeMillis - vorigeMillisRequest >= interval){
-    vorigeMillis = huidigeMillis;
+    vorigeMillisRequest = huidigeMillis;
     return true;
   }
 

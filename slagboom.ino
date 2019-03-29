@@ -1,36 +1,48 @@
 //constanten om de standen van de servo te bepalen
 const int GESLOTEN = 0; 
 const int OPEN = 90;
+const int KLEINE_UITSLAG = 35;
 
-const int interval = 20;
+const int INTERVAL = 20;
 
 void slagboom(String actie){
-  switch(actie){
-    case "openen":
-      servo.write(OPEN);
-      break;
-    case "sluiten":
-      servo.write(GESLOTEN);
-      break;
-    case "langzaam openen":
-      int value = servo.read();
-      if(stopwatch(servo_interval)){
-        if(servoValue < GESLOTEN){
-          value++;
-        }
+  if(actie == "Openen"){
+    servo.write(OPEN);
+  } else if(actie == "Sluiten") {
+    servo.write(GESLOTEN);  
+  } else if(actie == "Langzaam openen"){
+    int servoValue = servo.read();
+    if(stopwatch(INTERVAL)){
+      if(servoValue < OPEN){
+        servoValue ++;
       }
-      servo.write(servoValue);
-      break;
-    case "langzaam dicht":
-      int value = servo.read();
-      if(stopwatch(servo_interval)){
-        if(value > GESLOTEN){
-          value--;
-        }
+    }
+    servo.write(servoValue);
+  }else if(actie == "Langzaam sluiten"){
+    int servoValue = servo.read();
+    if(stopwatch(INTERVAL)){
+      if(servoValue > GESLOTEN){
+        servoValue--;
       }
-      servo.write(value);
-      break;
-  }
+    }
+    servo.write(servoValue);
+  } else if(actie == "kleine uitslag"){
+    int servoValue = servo.read();
+    if(stopwatch(INTERVAL)){
+      if(servoValue < KLEINE_UITSLAG){
+        servoValue ++;
+      }
+    }
+    servo.write(servoValue);
+  } else if(actie == "kleine uitslag sluiten"){
+    int servoValue = servo.read();
+    if(stopwatch(INTERVAL)){
+      if(servoValue > KLEINE_UITSLAG){
+        servoValue--;
+      }
+    }
+    servo.write(servoValue);
+}
 }
 
 boolean helemaalGeopend(){
@@ -39,4 +51,8 @@ boolean helemaalGeopend(){
 
 boolean helemaalGesloten(){
   return (servo.read() <= GESLOTEN);
+}
+
+boolean kleinStukjeGeopend(){
+  return (servo.read() >= KLEINE_UITSLAG);
 }

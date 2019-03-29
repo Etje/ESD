@@ -1,9 +1,9 @@
 const int PIN_ARRAY[] = {11, 12, 13};
-const int LENGTE_VAN_PIN_ARRAY = sizeof(PIN_ARRAY / sizeof(int));
+const int LENGTE_VAN_PIN_ARRAY = sizeof(PIN_ARRAY) / sizeof(int);
 
 const int DATASERIAL = 11;
-const int CLOCK = 12;
-const int STORAGECLOCKPIN = 13;
+const int CLOCK = 13;
+const int STORAGECLOCKPIN = 12;
 const int OUTPUT_PINS = 8;
 
 void SetupShiftRegister() {
@@ -32,4 +32,6 @@ void setShiftRegister(byte patroon) {
     digitalWrite(CLOCK, HIGH);
     digitalWrite(CLOCK, LOW);
   }
+  digitalWrite(STORAGECLOCKPIN, HIGH);
+  digitalWrite(STORAGECLOCKPIN, LOW);
 }

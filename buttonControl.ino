@@ -1,46 +1,136 @@
-const int BUTTON_PIN[4] = {4, 3, 2, A0};
+const int BUTTON_RELEASED = 1; 
+const int BUTTON_CHECK_PRESSED = 2; 
+const int BUTTON_PRESSED = 3; 
+const int BUTTON_CHECK_RELEASED = 4; 
+  
+const int BUTTON_PIN[] = {4, 3, 2, A0};
 const int LENGTE_BUTTON_ARRAY = sizeof(BUTTON_PIN) / sizeof(int);
+int pinClicked;
 
-int VOETGANGERS_BUTTON;
-int VERKEER_LINKS_BUTTON;
-int VERKEER_RECHTS_BUTTON;
-int TEST_BUTTON;
+int button_state; 
+boolean button_clicked; 
+unsigned long buttonPreviousMillis; 
+const int BUTTON_INTERVAL = 10;
 
 void button_Setup() {
-  for (int i = 0; i < LENGTE_BUTTON_ARRAY; i++) {
-    pinMode(BUTTON_PIN[i], INPUT_PULLUP);
+  button_clicked = false; 
+  button_state = BUTTON_RELEASED; 
+  pinClicked = -1;
+  button_released_entry();
+}
+
+boolean button_click(){
+  if(button_clicked == true){
+    button_clicked = false; 
+    return true; 
+  } else {
+    return false;
   }
 }
 
-int gedruktStoplicht(){
-  int knop = 0; 
-  VOETGANGERS_BUTTON = digitalRead(BUTTON_PIN[0]);
-  VERKEER_LINKS_BUTTON = digitalRead(BUTTON_PIN[1]);
-  VERKEER_RECHTS_BUTTON = digitalRead(BUTTON_PIN[2]);
-  TEST_BUTTON = digitalRead(BUTTON_PIN[3]);
+void buttonStateMachine(){
+  //Serial.println(button_state);
+  switch(button_state){
+    case BUTTON_RELEASED: 
+      button_released_do();
+      for(int i = 0; i < LENGTE_BUTTON_ARRAY; i++){
+        
+        if(hardwareDown(BUTTON_PIN[i]) == true){
+          pinClicked = BUTTON_PIN[i];
+          button_released_exit();
+          button_state = BUTTON_CHECK_PRESSED; 
+          button_check_pressed_entry();
+        }
+      }
+      break; 
+    case BUTTON_CHECK_PRESSED: 
+      button_check_pressed_do();
+      if(hardwareUp(pinClicked) == true){
+        button_check_pressed_exit();
+        button_state = BUTTON_RELEASED; 
+        button_released_entry();
+      }
+      else if((hardwareDown(pinClicked) == true) && (millis() - buttonPreviousMillis >= BUTTON_INTERVAL)) {
+        button_check_pressed_exit();
+        button_state = BUTTON_PRESSED; 
+        button_pressed_entry();
+      }
+      break; 
+    case BUTTON_PRESSED: 
+      button_pressed_do();
+        if(hardwareUp(pinClicked) == true){
+          button_pressed_exit();
+          button_state = BUTTON_CHECK_RELEASED; 
+          button_check_released_entry();            
+        }
+        break; 
+    case BUTTON_CHECK_RELEASED: 
+      button_check_released_do(); 
+      if(hardwareDown(pinClicked) == true){
+        button_check_released_exit();
+        button_state = BUTTON_PRESSED; 
+        button_check_pressed_entry();
+      } 
+      else if((hardwareUp(pinClicked) == true) 
+               && (millis() - BUTTON_INTERVAL >= buttonPreviousMillis)){
+        button_check_released_exit(); 
+        button_state = BUTTON_RELEASED; 
 
-  if(VOETGANGERS_BUTTON == LOW){
-    knop = BUTTON_PIN[0];
-    Serial.println(knop);
-  } 
-  
-  else if(VERKEER_LINKS_BUTTON == LOW){
-    knop = BUTTON_PIN[1];
-    Serial.println(knop);
-  } 
-  
-  else if(VERKEER_RECHTS_BUTTON == LOW){
-    knop = BUTTON_PIN[2];
-    Serial.println(knop);
-  } 
-  
-  else if(TEST_BUTTON == LOW){
-    knop = BUTTON_PIN[3];
-    Serial.println(knop);
+        button_clicked = true; 
+        
+        Serial.println(pinClicked);
+        voegToeAanRequests(pinClicked);
+        
+        button_released_entry();         
+      }
+      break;         
+    }
   }
 
-  return knop; 
+void button_released_entry(){
+  //<nothing>
 }
 
+void button_released_do(){
+  //<nothing>
+}
 
+void button_released_exit(){
+  //<nothing>
+}
 
+void button_check_pressed_entry(){
+  buttonPreviousMillis = millis();
+}
+
+void button_check_pressed_do(){
+    //<nothing>
+}
+
+void button_check_pressed_exit(){
+  //<nothing>  
+}
+
+void button_pressed_entry(){
+  //<nothing>
+}
+
+void button_pressed_do(){
+  //<nothing>
+}
+
+void button_pressed_exit(){
+  //<nothing>
+}
+
+void button_check_released_entry(){
+  buttonPreviousMillis = millis();
+}
+
+void button_check_released_do(){
+    //<nothing>
+}
+
+void button_check_released_exit(){
+    //<nothing>
+}

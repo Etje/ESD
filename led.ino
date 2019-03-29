@@ -1,4 +1,4 @@
-const int pinHIGH = 1; 
+const int PINHIGH = 1; 
 
 void controlSetup(int nr){
   pinMode(nr, OUTPUT);
@@ -13,7 +13,7 @@ void lampjeUit(int nr){
 }
 
 void lampjeKnipperen(int nr){
-  if(digitalRead(nr) == pinHigh){
+  if(digitalRead(nr) == PINHIGH){
     digitalWrite(nr, LOW);
   }else {
     digitalWrite(nr, HIGH);

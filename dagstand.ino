@@ -15,9 +15,8 @@ void dagStandState(){
     break; 
     case DAGSTAND_AAN: 
       dagstand_aan_do();
-      if(timer(check)){
-        checkAanvraag();
-        checkNacht();
+      if(stopwatch(check)){
+        checkVolgendeRequest();
       }
     break; 
     default: 
@@ -42,7 +41,7 @@ void opstarten_dagstand_exit(){
 
 void dagstand_aan_entry(){
   zetStoplichtenAan(ROOD, ROOD);
-  slagboom("sluiten");
+  slagboom("Sluiten");
   matrixBord(7);
 }
 
