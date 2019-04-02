@@ -1,3 +1,4 @@
+//konstanten en variablen voor de buzzer
 const int BUZZER_PIN = A1;
 const int FREQUENCY = 550; 
 const int TIJD = 50; 
@@ -6,16 +7,18 @@ const int KORTE_TIJD = 1000;
 const int AANTAL_KEER_SNEL_TIKKEN = 3; 
 int normaalTikken = 1; 
 
-int buzzer_tijd_steeds_sneller = 1500; 
+//tijdsaanduidingen (intervallen) voor de buzzer
 const int BUZZER_TIJD_KORT = 3000;
 const int BUZZER_TIJD_LANGZAAM = 2000;
 const int BUZZER_TIJD_SNEL_TIKKEN = 500;
 const int BUZZER_TIJD_AFTELLEN = 250;
 
+//setup functie voor buzzer
 void buzzerSetup() {
   pinMode(BUZZER_PIN, OUTPUT);
 }
 
+//functie voor het genereren van het geluid
 void setBuzzer(String actie) {
   if(actie == "Langzaam tikken") { 
     if(stopwatchBuzzer(BUZZER_TIJD_LANGZAAM)){

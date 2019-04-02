@@ -1,13 +1,14 @@
+//initialiseren van de request array
 int requestArray[] = {0, 0, 0, 0}; 
 const int REQUEST_ARRAY_LENGTH = sizeof(requestArray) / sizeof(int);
 
-const int TEST_KNOP = 4; 
+//const int TEST_KNOP = 4; 
 
+//volledige setup functie
 void verkeerSetup(){
-  
   Serial.begin(9600);
   setupTimers();
-  SetupShiftRegister();
+  setupShiftRegister();
   servo_setup(); 
   stoplichtSetup(); 
   button_Setup();
@@ -16,9 +17,9 @@ void verkeerSetup(){
 
   dagstand_aan_entry();
   mainSituatie = DAG; 
-
 }
 
+//regelen van de verschillende toestanden
 void verkeer(){
   switch(mainSituatie){
     case DAG: 
@@ -33,7 +34,7 @@ void verkeer(){
     case VOETGANGER_VRAAGT_OM_OVER_TE_STEKEN: 
       voetgangersStateMachine(); 
       break; 
-    case TEST_KNOP: 
+    case TEST: 
       testStateMachine(); 
       break;
     default:
@@ -41,22 +42,20 @@ void verkeer(){
   }
 }
 
-void voegToeAanRequests(int buttonPin) {
-  if(!bestaatRequestInArray(convertButtonNaarStatus(buttonPin))){
+//nummer toevoegen aan de request array als er op een button gedrukt is
+void voegRequestsToe(int buttonPin) {
+  if(!bestaatRequest(convert(buttonPin))){
     for(int i = 0; i < REQUEST_ARRAY_LENGTH; i++) {
       if(requestArray[i] == 0){
-        requestArray[i] = convertButtonNaarStatus(buttonPin);
+        requestArray[i] = convert(buttonPin);
         break;
-      }
-      for(int i = 0; i < 4; i++){
-        Serial.print(requestArray[i]);
       }
     }
   }
 }
 
-//checkt of er een nieuw request is
-void checkVolgendeRequest() {
+//kijkt of er een volgende request is
+void checkVolgende() {
   for(int i = 0; i < REQUEST_ARRAY_LENGTH; i++) {
     if(requestArray[i] != 0){
       mainSituatie = requestArray[i];
@@ -66,8 +65,8 @@ void checkVolgendeRequest() {
   }
 }
 
-//controleert of een request al in de wachtrij staat
-boolean bestaatRequestInArray(int statusNummer) {
+//checkt of het request al in de array voorkomt
+boolean bestaatRequest(int statusNummer) {
   for(int i = 0; i < REQUEST_ARRAY_LENGTH; i++) {
     if(requestArray[i] == statusNummer){
       return true;
@@ -77,8 +76,8 @@ boolean bestaatRequestInArray(int statusNummer) {
   return false;
 }
 
-//zet een buttonpin om naar een state
-int convertButtonNaarStatus(int buttonPin) {
+//convert het nummer naar een status
+int convert(int buttonPin) {
  switch(buttonPin){
     case 14:
       return AUTO_LINKS;
@@ -87,7 +86,7 @@ int convertButtonNaarStatus(int buttonPin) {
       return VOETGANGER_VRAAGT_OM_OVER_TE_STEKEN;
     break;
     case 2: 
-      return TEST_KNOP;
+      return TEST;
       break;
     case 4:
       return AUTO_RECHTS;

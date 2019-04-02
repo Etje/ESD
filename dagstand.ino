@@ -1,8 +1,10 @@
+//konstanten voor de dagstand
 const int OPSTARTEN_DAGSTAND = 0; 
 const int DAGSTAND_AAN = 1; 
 
 int dagState = DAGSTAND_AAN; 
 
+//statemachine voor de dagstand
 void dagStandState(){
   switch(dagState){
     case OPSTARTEN_DAGSTAND: 
@@ -16,7 +18,7 @@ void dagStandState(){
     case DAGSTAND_AAN: 
       dagstand_aan_do();
       if(stopwatch(check)){
-        checkVolgendeRequest();
+        checkVolgende();
       }
     break; 
     default: 
@@ -24,6 +26,7 @@ void dagStandState(){
    }
 }
 
+//functies die nodig zijn voor het statemachine van de dagstand
 void opstarten_dagstand_entry(){
   // <nothing>
 }

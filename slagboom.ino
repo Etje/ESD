@@ -5,6 +5,7 @@ const int KLEINE_UITSLAG = 35;
 
 const int INTERVAL = 20;
 
+//functie voor het laten werken van de slagboom
 void slagboom(String actie){
   if(actie == "Openen"){
     servo.write(OPEN);
@@ -45,6 +46,7 @@ void slagboom(String actie){
 }
 }
 
+//functie om de stanten van de slagboom te kunnen controleren
 boolean helemaalGeopend(){
   return (servo.read() >= OPEN);
 }

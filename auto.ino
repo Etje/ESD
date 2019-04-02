@@ -1,14 +1,18 @@
+//konstanten voor de verschillende intervallen (tijd dat een bepaald licht aan of uit moet staan)
 const int ORANJE_INTERVAL = 3000;
 const int GROEN_INTERVAL = 8000; 
 const int KNIPPEREN_INTERVAL = 250; 
-  
+
+//konstanten voor de verschillende lichten  
 const int ROOD = 0;
 const int ORANJE = 1;
 const int GROEN = 2;
 const int GROEN_KNIPPEREN = 4; 
 
+//aanduiding van huidige staat
 int huidigeStaat = huidigeStoplichtStaat(); 
 
+//stoplichten statemachine
 void autoStatemachine(String kant) {
   switch(soortStoplicht){
     case 1:
@@ -95,6 +99,7 @@ int huidigeStoplichtStaat(){
   return huidigeStaat; 
 }
 
+//groen licht
 void groen_entry(){
   // <nothing>
 }
@@ -164,6 +169,7 @@ void groen_knipperen_oostenrijk_exit(){
   Serial.println("hij komt in de stopwatch");
 }
 
+//oranje licht
 void oranje_entry(){
   // <nothing>
 }
@@ -181,6 +187,7 @@ void oranje_exit(){
   huidigeStaat = GROEN;
 }
 
+//rood licht
 void rood_oranje_do(String kant){
     if(kant == "Links"){
       zetStoplichtenAan(ROOD, ROOD);

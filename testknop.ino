@@ -1,3 +1,4 @@
+//konstanten voor de testknop
 const int KLEINE_UITSLAG_WAARDE = 50;
 
 const int TEST_INTERVAL = 1000;  
@@ -21,6 +22,7 @@ const int BUZZER_KORT = 500;
 
 int testKnopState = ROOD_LICHT;
 
+//testknop statemachine
 void testStateMachine() {  
   int kant = 0; 
   switch (testKnopState) {
@@ -92,8 +94,7 @@ void testStateMachine() {
   }
 }
 
-/* void rechts */
-
+//stoplichten rechts
 void rood_licht_rechts_entry(){
   //<nothing>
 }
@@ -131,11 +132,7 @@ void groen_licht_rechts_exit(){
 }
 
 
-/* Einde rechts void */
-
-
-/* Begin links void  */
-
+//stoplichten links
 void rood_licht_links_entry(){
   //<nothing>
 }
@@ -172,8 +169,8 @@ void groen_licht_links_exit(){
   testKnopState = BUZZER_KORT;
 }
 
-/* Einde links void  */
 
+//buzzer functies
 void buzzer_kort_entry(){
   //<nothing>
 }
@@ -187,6 +184,7 @@ void buzzer_kort_exit(){
   testKnopState = SLAGBOOM_UITSLAG_OPEN;
 }
 
+//slagboom functies
 void slagboom_uitslag_entry(){
   //<nothing>
 }

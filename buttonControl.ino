@@ -1,8 +1,9 @@
+//konstanten voor de verschillende situaties van de buttons
 const int BUTTON_RELEASED = 1; 
 const int BUTTON_CHECK_PRESSED = 2; 
 const int BUTTON_PRESSED = 3; 
 const int BUTTON_CHECK_RELEASED = 4; 
-  
+
 const int BUTTON_PIN[] = {4, 3, 2, A0};
 const int LENGTE_BUTTON_ARRAY = sizeof(BUTTON_PIN) / sizeof(int);
 int pinClicked;
@@ -28,8 +29,8 @@ boolean button_click(){
   }
 }
 
+//statemachine voor de buttons
 void buttonStateMachine(){
-  //Serial.println(button_state);
   switch(button_state){
     case BUTTON_RELEASED: 
       button_released_do();
@@ -79,7 +80,7 @@ void buttonStateMachine(){
         button_clicked = true; 
         
         Serial.println(pinClicked);
-        voegToeAanRequests(pinClicked);
+        voegRequestsToe(pinClicked);
         
         button_released_entry();         
       }

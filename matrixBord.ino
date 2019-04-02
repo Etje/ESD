@@ -1,3 +1,4 @@
+//genereren van een bitsequence voor het display
 const byte SEQUENCEARRAY[] = {
   B11111100, //0
   B01100000, //1
@@ -11,6 +12,7 @@ const byte SEQUENCEARRAY[] = {
   B11110110, //9
 };
 
+//fucntie voor het gebruik van het 7 sigmenten display
 void matrixBord(int nr){
   setShiftRegister(SEQUENCEARRAY[nr]);
 }

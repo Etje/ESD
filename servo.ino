@@ -1,3 +1,4 @@
+//functies en variablen voor de servo (slagboom)
 #include <Servo.h>
 
 Servo servo; 

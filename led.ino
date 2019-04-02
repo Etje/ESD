@@ -1,5 +1,6 @@
 const int PINHIGH = 1; 
 
+//functies voor het aan en uitzetten van een led en het laten knipperen van een led
 void controlSetup(int nr){
   pinMode(nr, OUTPUT);
 }

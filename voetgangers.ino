@@ -1,3 +1,4 @@
+//konstanten voor de verschillende situaties 
 const int SLAGBOOM_LANGZAAM_OMHOOG = 0;
 const int VOETGANGERS_OVERSTEKEN = 1;
 const int AFTELLEN = 2;
@@ -10,6 +11,7 @@ const int VOETGANGERS_OVERSTEKEN_INTERVAL = 10000;
 
 int voetgangersState = SLAGBOOM_LANGZAAM_OMHOOG;
 
+//voetgangers statemachine
 void voetgangersStateMachine() {  
   switch (voetgangersState) {
     case SLAGBOOM_LANGZAAM_OMHOOG:
@@ -52,6 +54,7 @@ void voetgangersStateMachine() {
   }
 }
 
+//slagboom langzaam open
 void slagboom_langzaam_omhoog_entry(){
   // <nothing>
 }
@@ -64,6 +67,7 @@ void slagboom_langzaam_omhoog_exit(){
   // <nothing>
 }
 
+//voetganger_oversteken
 void voetgangers_oversteken_entry() {
   //<nothing>
 }
@@ -77,12 +81,12 @@ void voetgangers_oversteken_exit(){
   //<nothing>
 }
 
+//begin met aftellen
 void aftellen_entry(){
   matrixBord(nr);
 }
 
 void aftellen_do() {
-  Serial.println("hij gaat aftellen");
   setBuzzer("3 keer snel tikken");
   if(stopwatch(DISPLAY_AFTELLEN)){
     nr--;
@@ -94,6 +98,7 @@ void aftellen_exit() {
   nr = 6;
 }
 
+//slagboom omlaag
 void slagboom_langzaam_omlaag_entry() {
   // <nothing>
 }
