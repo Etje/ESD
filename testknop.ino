@@ -22,7 +22,6 @@ const int BUZZER_KORT = 500;
 int testKnopState = ROOD_LICHT;
 
 void testStateMachine() {  
-  int kant = 0; 
   switch (testKnopState) {
     case ROOD_LICHT_RECHTS:
         rood_licht_rechts_do();
@@ -103,7 +102,7 @@ void rood_licht_rechts_do(){
 }
 
 void rood_licht_rechts_exit(){
-  testKnopState = ORANJE_LICHT; 
+  testKnopState = ORANJE_LICHT_RECHTS; 
 }
 
 void oranje_licht_rechts_entry(){

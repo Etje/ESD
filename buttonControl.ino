@@ -77,7 +77,6 @@ void buttonStateMachine(){
         button_state = BUTTON_RELEASED; 
 
         button_clicked = true; 
-        
         Serial.println(pinClicked);
         voegToeAanRequests(pinClicked);
         

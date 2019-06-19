@@ -48,9 +48,6 @@ void voegToeAanRequests(int buttonPin) {
         requestArray[i] = convertButtonNaarStatus(buttonPin);
         break;
       }
-      for(int i = 0; i < 4; i++){
-        Serial.print(requestArray[i]);
-      }
     }
   }
 }

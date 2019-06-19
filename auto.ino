@@ -130,7 +130,7 @@ void groen_duits_do(String kant){
 }
 
 void groen_oostenrijk_do(String kant){
-
+  setBuzzer("Langzaam tikken");
   if(kant == "Links"){
     zetStoplichtenAan(GROEN, ROOD); 
   } else {
@@ -140,6 +140,7 @@ void groen_oostenrijk_do(String kant){
 }
 
 void groen_knipperen_oostenrijk_do(String kant){
+  setBuzzer("Langzaam tikken");
   if(kant == "Links"){
      laatLampjeKnipperen(kant);
   } else {
@@ -152,7 +153,8 @@ void groen_exit(){
 }
 
 void groen_duits_exit(){
-  huidigeStaat = ORANJE; 
+  //  huidigeStaat = ORANJE; 
+  //<nothing>
 }
 
 void groen_oostenrijk_exit(){
@@ -161,7 +163,6 @@ void groen_oostenrijk_exit(){
 
 void groen_knipperen_oostenrijk_exit(){
   huidigeStaat = GROEN;
-  Serial.println("hij komt in de stopwatch");
 }
 
 void oranje_entry(){
@@ -178,21 +179,15 @@ void oranje_do(String kant){
 }
 
 void oranje_exit(){
-  huidigeStaat = GROEN;
+// <nothing>
 }
 
-void rood_oranje_do(String kant){
-    if(kant == "Links"){
-      zetStoplichtenAan(ROOD, ROOD);
-      zetStoplichtenAan(ORANJE, ROOD);
-    } else {
-      zetStoplichtenAan(ROOD, ROOD);
-      zetStoplichtenAan(ROOD, ORANJE);
-    }
+void rood_oranje_duits_entry(){
+  //<nothing>
 }
 
 void rood_oranje_duits_do(String kant){
-  
+    setBuzzer("Langzaam tikken");
     if(kant == "Links"){
       zetStoplichtenAan(ROOD, ROOD);
       zetStoplichtenAan(ORANJE, ROOD);
@@ -203,8 +198,12 @@ void rood_oranje_duits_do(String kant){
     
 }
 
+void rood_oranje_oostenrijk_entry(){
+  //<nothing>
+}
+
 void rood_oranje_oostenrijk_do(String kant){
-  
+    setBuzzer("Langzaam tikken");
     if(kant == "Links"){
       zetStoplichtenAan(ORANJE, ROOD);
     } else {

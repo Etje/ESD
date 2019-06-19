@@ -82,7 +82,6 @@ void aftellen_entry(){
 }
 
 void aftellen_do() {
-  Serial.println("hij gaat aftellen");
   setBuzzer("3 keer snel tikken");
   if(stopwatch(DISPLAY_AFTELLEN)){
     nr--;
